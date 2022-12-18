@@ -1,6 +1,7 @@
 class MicropostsController < ApplicationController
   before_action :require_user_logged_in
   before_action :correct_user, only: [:destroy]
+  before_action :favorite_destroy, only: [:destroy]
 
   def create
     @micropost = current_user.microposts.build(micropost_params)
@@ -31,5 +32,10 @@ class MicropostsController < ApplicationController
     unless @micropost
       redirect_to root_url
     end
+  end
+  
+  def favorite_destroy
+    favorite = Favorite.find_by(micropost_id: @micropost.id)
+    favorite.destroy if favorite
   end
 end
