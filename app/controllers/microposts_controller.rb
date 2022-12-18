@@ -35,7 +35,6 @@ class MicropostsController < ApplicationController
   end
   
   def favorite_destroy
-    favorite = Favorite.find_by(micropost_id: @micropost.id)
-    favorite.destroy if favorite
+    Favorite.where(micropost_id: @micropost.id).destroy_all
   end
 end
